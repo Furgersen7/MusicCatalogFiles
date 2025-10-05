@@ -577,8 +577,12 @@ async function shareTrack(t){const link=`https://www.youtube.com/watch?v=${t.id}
 try{if(navigator.share)await navigator.share({title:t.title,text:`Listen to ${t.title}`,url:link});
 else{await navigator.clipboard.writeText(link);alert("Link copied!");}}catch{}}
 function saveState(){localStorage.setItem("f7state",JSON.stringify({cur,loopAll}));}
-function loadState(){const s=JSON.parse(localStorage.getItem("f7state")||"{}");
-if(s.cur!=null)cur=s.cur;loopAll=!!s.loopAll;refreshBtns();}
+function loadState(){
+  const s=JSON.parse(localStorage.getItem("f7state")||"{}");
+  if(s.cur != null) cur = s.cur;
+  loopAll = true; // ✅ Always ON at start, ignore saved state
+  refreshBtns();
+}
 function refreshBtns(){loopBtn.classList.toggle("active",loopAll);}
 function togglePlayIcon(){
   const s=player.getPlayerState&&player.getPlayerState();
