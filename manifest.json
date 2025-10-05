@@ -1,16 +1,25 @@
 {
-  "name": "F7BEATS Music Catalog",
+  "name": "F7BEATS MUSIC CATALOG ©",
   "short_name": "F7BEATS",
-  "description": "Comprehensive catalog of soulful, cinematic hip-hop instrumentals produced by Furgersen7.",
+  "description": "A comprehensive catalog of soulful, cinematic hip-hop beats by Furgersen7.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
+  "orientation": "portrait-primary",
   "icons": [
+    {
+      "src": "https://images.squarespace-cdn.com/content/v1/54610117e4b08a5bd8f003ca/bf357a0f-71ec-47d5-9062-bea7ddb04a55/FURGERSEN7+LOGO.jpg?format=192w",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
     {
       "src": "https://images.squarespace-cdn.com/content/v1/54610117e4b08a5bd8f003ca/bf357a0f-71ec-47d5-9062-bea7ddb04a55/FURGERSEN7+LOGO.jpg?format=512w",
       "sizes": "512x512",
       "type": "image/png"
     }
-  ]
+  ],
+  "lang": "en-US",
+  "dir": "ltr"
 }
