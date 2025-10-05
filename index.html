@@ -74,18 +74,20 @@ header{
   text-align:center;
 }
 input[type=range]{
-  -webkit-appearance:none;
-  appearance:none;
-  width:100%;
-  height:3px;
-  background:#ddd;
-  outline:none;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 3px;
+  background: #ddd;
+  outline: none;
 }
 input[type=range]::-webkit-slider-thumb{
-  -webkit-appearance:none;
-  width:12px;height:12px;
-  background:var(--ink);
-  cursor:pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: var(--ink);
+  cursor: pointer;
 }
 
 /* controls */
@@ -532,7 +534,7 @@ const TRACKS = [
   { title: "JID TYPE BEAT ACTIN IFY", id: "syZz-rKEShs" },
   { title: "DURKDILLA", id: "6tT4G6n-qqs" },
 ];
-let player, cur=0, dur=0, loopAll=false;
+let player, cur=0, dur=0, loopAll=true;
 const $=s=>document.querySelector(s);
 const curT=$("#cur"),durT=$("#dur"),seek=$("#seek"),
 plist=$("#playlist"),plistBtn=$("#plistbtn"),
@@ -552,6 +554,7 @@ function init(){
   loopBtn.addEventListener("click",()=>{loopAll=!loopAll;refreshBtns();saveState();},{passive:true});
   plistBtn.addEventListener("click",()=>{plist.style.display=plist.style.display==="block"?"none":"block";},{passive:true});
   seek.addEventListener("input",()=>{if(dur)player.seekTo((seek.value/100)*dur,true);});
+    refreshBtns(); //
 }
 function stateChange(e){togglePlayIcon();if(e.data===YT.PlayerState.ENDED&&loopAll)loadAndPlay((cur+1)%TRACKS.length);}
 function update(){if(!player||!player.getCurrentTime)return;const t=player.getCurrentTime()||0;dur=player.getDuration()||0;
