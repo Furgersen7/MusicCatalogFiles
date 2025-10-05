@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+
+<title>F7BEATS MUSIC CATALOG ©</title>
+
+<!-- PWA Essentials -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#000000" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="https://images.squarespace-cdn.com/content/v1/54610117e4b08a5bd8f003ca/bf357a0f-71ec-47d5-9062-bea7ddb04a55/FURGERSEN7+LOGO.jpg?format=512w">
+
+<meta name="description" content="F7BEATS MUSIC CATALOG © — comprehensive playlist of music produced by Furgersen7. Stream the full catalog of soulful, cinematic hip-hop instrumentals.">
+<meta property="og:title" content="F7BEATS MUSIC CATALOG ©">
+<meta property="og:description" content="A complete collection of original music by Furgersen7. Stream the catalog of soulful, cinematic hip-hop beats.">
+<meta property="og:image" content="https://images.squarespace-cdn.com/content/v1/54610117e4b08a5bd8f003ca/bf357a0f-71ec-47d5-9062-bea7ddb04a55/FURGERSEN7+LOGO.jpg?format=1500w">
+<meta property="og:type" content="music.playlist">
+
+<style>
+/* keep your full player CSS */
+:root {
+  --bg:#f8f8f8;
+  --ink:#111;
+  --muted:#7c7c7c;
+  --ring:#ddd;
+  --blue:#007aff;
+  --dim:#9aa0a6;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;
+  display:flex;justify-content:center;align-items:center;
+  min-height:100vh;
+  flex-direction:column;
+  padding:clamp(12px,3vw,28px);
+}
+.f7wrap{width:clamp(320px, 90vw, 760px);margin:auto;padding:clamp(16px,2vw,24px);}
+header{text-align:center;font-weight:600;font-size:clamp(13px,1.2vw,16px);margin-bottom:10px;text-transform:uppercase;}
+.f7player{background:#fff;border:1px solid var(--ring);padding:20px;}
+.progress{display:flex;align-items:center;gap:10px;margin-top:10px;}
+.time{font-size:11px;color:var(--muted);min-width:36px;text-align:center;}
+input[type=range]{-webkit-appearance:none;width:100%;height:3px;background:#ddd;outline:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;background:var(--ink);cursor:pointer;}
+.controls{display:flex;justify-content:center;align-items:center;margin-top:14px;gap:28px;position:relative;}
+.center-group{display:flex;align-items:center;gap:16px;}
+.right-controls{position:absolute;right:0;display:flex;gap:10px;}
+.ctrl-btn{background:none;border:none;cursor:pointer;width:32px;height:32px;padding:0;}
+.ctrl-btn img{width:100%;height:100%;object-fit:contain;opacity:.92;transition:opacity .15s,filter .15s;}
+.ctrl-btn.active img{filter:invert(28%) sepia(91%) saturate(2890%) hue-rotate(197deg);}
+.playlist{margin-top:8px;border:1px solid var(--ring);background:#fff;display:block;max-height:420px;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.track{display:grid;grid-template-columns:40px 1fr 30px;align-items:center;padding:12px 16px;border-top:1px solid var(--ring);cursor:pointer;font-size:14px;}
+.track.active{background:#e8e8e8;font-weight:600;}
+footer{text-align:center;font-size:11px;color:var(--muted);margin-top:24px;}
+</style>
+</head>
+<body>
+<div class="f7wrap">
+  <header>F7BEATS MUSIC CATALOG ©</header>
+  <div class="f7player">
+    <div class="progress">
+      <div class="time" id="cur">0:00</div>
+      <input id="seek" type="range" min="0" max="100" value="0">
+      <div class="time" id="dur">0:00</div>
+    </div>
+    <div class="controls">
+      <div class="center-group">
+        <button class="ctrl-btn" id="prev"><img alt="Previous" src="https://images.squarespace-cdn.com/content/54610117e4b08a5bd8f003ca/b7016caa-94f8-4e74-b439-c1b9eaaa1749/custom.backward.fill.png"></button>
+        <button class="ctrl-btn" id="play"><img id="playIcon" alt="Play/Pause" src="https://images.squarespace-cdn.com/content/54610117e4b08a5bd8f003ca/fc36170f-ee9c-4155-a57e-5361e926073a/custom.play.fill.png"></button>
+        <button class="ctrl-btn" id="next"><img alt="Next" src="https://images.squarespace-cdn.com/content/54610117e4b08a5bd8f003ca/e825ffee-49eb-473a-92b7-7b8ae9fd41c1/custom.forward.fill.png"></button>
+      </div>
+      <div class="right-controls">
+        <button class="ctrl-btn" id="loop"><img alt="Loop playlist" src="https://images.squarespace-cdn.com/content/54610117e4b08a5bd8f003ca/cd0c6b0d-aa91-49a2-b13a-e975ea38a546/custom.repeat.png"></button>
+      </div>
+    </div>
+    <div class="playlist" id="playlist"></div>
+  </div>
+  <footer>© F7BEATS 2025</footer>
+</div>
+
+<div id="yt" style="position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0.01;"></div>
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+// your JS player logic (same as before)
+const TRACKS=[{title:"HI LOFI 1HR MIX 001",id:"LJODlqJVdj0"},{title:"HI LOFI 1HR MIX 002",id:"aBV1OksNMUQ"},{title:"HI LOFI 1HR MIX 003",id:"RDS7KwfbnFk"},{title:"HI LOFI 1HR MIX 004",id:"2T4ZRK9bsrg"},{title:"HI LOFI 1HR MIX 005",id:"C_nsLuI60R8"},{title:"HI LOFI 1HR MIX 006",id:"JWwQ6q3HGvg"},{title:"HI LOFI 1HR MIX 007",id:"I7yauk6XUcI"}];
+let player,cur=0,dur=0,loopAll=false;
+const $=s=>document.querySelector(s);
+const curT=$("#cur"),durT=$("#dur"),seek=$("#seek"),plist=$("#playlist"),loopBtn=$("#loop"),playBtn=$("#play"),prevBtn=$("#prev"),nextBtn=$("#next"),playIcon=$("#playIcon");
+function onYouTubeIframeAPIReady(){player=new YT.Player("yt",{videoId:TRACKS[cur].id,playerVars:{playsinline:1,controls:0,rel:0,modestbranding:1,origin:location.origin},events:{onReady:init,onStateChange:stateChange}});}
+function init(){buildList();update();setInterval(update,500);playBtn.addEventListener("click",togglePlay);prevBtn.addEventListener("click",()=>loadAndPlay((cur-1+TRACKS.length)%TRACKS.length));nextBtn.addEventListener("click",()=>loadAndPlay((cur+1)%TRACKS.length));loopBtn.addEventListener("click",()=>{loopAll=!loopAll;refreshBtns();});seek.addEventListener("input",()=>{if(dur)player.seekTo((seek.value/100)*dur,true);});}
+function stateChange(e){togglePlayIcon();if(e.data===YT.PlayerState.ENDED&&loopAll)loadAndPlay((cur+1)%TRACKS.length);}
+function update(){if(!player||!player.getCurrentTime)return;const t=player.getCurrentTime()||0;dur=player.getDuration()||0;curT.textContent=fmt(t);durT.textContent=fmt(dur);seek.value=dur?(t/dur)*100:0;}
+function togglePlay(){const s=player.getPlayerState();if(s===YT.PlayerState.PLAYING)player.pauseVideo();else player.playVideo();togglePlayIcon();}
+function loadAndPlay(i){cur=i;player.loadVideoById(TRACKS[cur].id);player.playVideo();highlightActive();}
+function highlightActive(){document.querySelectorAll(".track").forEach((r,i)=>r.classList.toggle("active",i===cur));}
+function buildList(){const frag=document.createDocumentFragment();TRACKS.forEach((t,i)=>{const r=document.createElement("div");r.className="track";r.innerHTML=`<div>${i+1}</div><div>${t.title}</div>`;r.addEventListener("click",()=>loadAndPlay(i));frag.appendChild(r);});plist.appendChild(frag);}
+function refreshBtns(){loopBtn.classList.toggle("active",loopAll);}
+function togglePlayIcon(){const s=player.getPlayerState&&player.getPlayerState();playIcon.src=(s===YT.PlayerState.PLAYING)?"https://images.squarespace-cdn.com/content/54610117e4b08a5bd8f003ca/2df292e5-e1db-47a1-af50-20c40a10fef1/custom.pause.fill.png":"https://images.squarespace-cdn.com/content/54610117e4b08a5bd8f003ca/fc36170f-ee9c-4155-a57e-5361e926073a/custom.play.fill.png";}
+function fmt(t){t=Math.max(0,Math.floor(t||0));return `${Math.floor(t/60)}:${String(t%60).padStart(2,"0")}`;}
+
+// Register service worker for PWA
+if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>{
+    navigator.serviceWorker.register("service-worker.js")
+      .then(reg=>console.log("✅ Service worker registered:",reg.scope))
+      .catch(err=>console.error("❌ Service worker failed:",err));
+  });
+}
+</script>
+</body>
+</html>
