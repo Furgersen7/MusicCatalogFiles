@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 
 <title>F7BEATS MUSIC CATALOG ©</title>
-<link rel="manifest" href="https://raw.githubusercontent.com/Furgersen7/MusicCatalogFiles/main/manifest.json">
+<link rel="manifest" href="manifest.json">
 
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -593,7 +593,7 @@ function fmt(t){t=Math.max(0,Math.floor(t||0));return `${Math.floor(t/60)}:${Str
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("https://raw.githubusercontent.com/Furgersen7/MusicCatalogFiles/main/service-worker.js")
+    navigator.serviceWorker.register("service-worker.js")
       .then(reg => console.log("✅ Service worker registered:", reg.scope))
       .catch(err => console.error("❌ Service worker failed:", err));
   });
